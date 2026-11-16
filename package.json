@@ -1,0 +1,37 @@
+{
+  "name": "blackbox",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first flight recorder for AI agent execution",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "blackbox": "./dist/cli.js",
+    "blackbox-on": "./dist/install-cursor-hooks.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc && node dist/install-cursor-hooks.js --install-command",
+    "demo": "tsx examples/demo-agent.ts",
+    "demo:instrumented": "tsx examples/instrumented-agent.ts",
+    "demo:proxy": "tsx examples/proxy-demo.ts",
+    "demo:crud": "tsx examples/crud-agent.ts",
+    "demo:cursor": "tsx examples/cursor-sample.ts",
+    "blackbox": "tsx src/cli.ts",
+    "setup:cursor": "tsx src/install-cursor-hooks.ts",
+    "pretest": "tsc --noEmit -p tsconfig.check.json",
+    "test": "tsx --test test/recording.test.ts test/export-report.test.ts test/demo.test.ts test/instrument.test.ts test/cli.test.ts test/protocol.test.ts test/proxy.test.ts test/environment.test.ts test/replay.test.ts test/compare.test.ts test/verify.test.ts test/crud.test.ts test/cursor-adapter.test.ts test/install-cursor-hooks.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
