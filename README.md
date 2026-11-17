@@ -32,6 +32,15 @@ That writes `.cursor/hooks.json` for that folder only. Other projects stay off. 
 
 Open `report.html` in a browser. The page is one file. A new chat writes its own page from the same generator, so you do not edit each report by hand.
 
+## Upgrading from an older version
+
+Delete the old `blackbox-on` command left by the previous build before you run `npm link`.
+
+- Windows: delete `%APPDATA%\npm\blackbox-on.cmd`, and `blackbox-on` and `blackbox-on.ps1` in that same folder if they are present.
+- macOS and Linux: delete `~/.local/bin/blackbox-on`.
+
+On Windows the old file blocks `npm link`, and on macOS and Linux it can still run old code if `~/.local/bin` comes first in `PATH`.
+
 ## Read the dashboard
 
 The counts are filters. **Reads** are files the agent opened. **Edits** are files it changed. They are separate, and each has its own color. Chat, tools, commands, and problems work the same way.
