@@ -73,31 +73,21 @@ On Windows the old file blocks `npm link`, and on macOS and Linux it can still r
 
 From the Marketplace, once Blackbox is approved: open Customize, search for Blackbox, and choose Install.
 
-To test it locally before that, link this repository into Cursor's local plugins folder, then restart Cursor.
-
-Run these from the cloned Blackbox folder.
-
-macOS and Linux:
+To test it locally before that, from the cloned Blackbox folder run:
 
 ```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s "$(pwd)" ~/.cursor/plugins/local/blackbox
+npm run plugin:local
 ```
 
-Windows, from PowerShell:
-
-```powershell
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\plugins\local"
-New-Item -ItemType Junction -Path "$env:USERPROFILE\.cursor\plugins\local\blackbox" -Target (Get-Location)
-```
+That copies the plugin into `~/.cursor/plugins/local/blackbox` on macOS and Linux, or `%USERPROFILE%\.cursor\plugins\local\blackbox` on Windows, and replaces an older copy. Restart Cursor, or reload the window.
 
 Node.js 20 or newer must be installed and on `PATH`. The hook runs `node`. Without Node, nothing is recorded.
 
-Everything is stored in `<project>/.blackbox`. Nothing is uploaded. Secrets are redacted. Chain-of-thought is never stored. Blackbox keeps only its length and duration.
+Recordings stay in `<project>/.blackbox` and are git-ignored automatically. Nothing is uploaded. Object keys named `authorization`, `apiKey`, `api_key`, `token`, `password`, `secret`, and `accessToken` are replaced with `[REDACTED]`. String values that look like `sk-...`, `Bearer ...`, `AKIA...`, or `ghp_...` are replaced the same way. Other secrets, for example `.env` lines, private keys, JWTs, `github_pat_` tokens, and passwords in normal text, may still be stored. Chain-of-thought is never stored. Blackbox keeps only its length and duration.
 
 See a recording with `/blackbox-report`, or open `report.html` in the session folder. Run `/blackbox-report` from the project. It opens the newest dashboard and replies with the session id and path. It does not read or summarize the recording.
 
-Turn Blackbox off by uninstalling the plugin.
+To turn it off, uninstall the plugin in Customize. For a local install, delete the copied folder instead. Reload Cursor. Delete `<project>/.blackbox` folders to remove old recordings.
 
 Cursor's CLI does not run plugin hooks yet. CLI users should use `blackbox-on`.
 
@@ -176,7 +166,7 @@ There is no field for hidden model reasoning. Do not put chain-of-thought into t
 
 `captureContent: false` keeps names, ids, types, tool names, error names, and retry attempt numbers. It replaces payload fields (`content`, `input`, `output`, `arguments`, `details`, `data`, `message`, `reason`, `summary`, `delta`, `task`, `body`, `headers`) with `{ "omitted": true, "byteLength": N }`. `byteLength` is the UTF-8 size of `JSON.stringify` of the original value. The finish summary is omitted too, so it is not copied onto the session header.
 
-`redactSecrets: true` runs before the write. Object keys named `authorization`, `apiKey`, `api_key`, `token`, `password`, `secret`, and `accessToken` are replaced with `[REDACTED]`. String values that look like `sk-...`, `Bearer ...`, AWS access key ids, or `ghp_...` tokens are replaced the same way. The value returned by a record method is the stored value, after omission and redaction.
+`redactSecrets: true` runs before the write. Object keys named `authorization`, `apiKey`, `api_key`, `token`, `password`, `secret`, and `accessToken` are replaced with `[REDACTED]`. String values that look like `sk-...`, `Bearer ...`, `AKIA...`, or `ghp_...` are replaced the same way. Other secrets, for example `.env` lines, private keys, JWTs, `github_pat_` tokens, and passwords in normal text, may still be stored. The value returned by a record method is the stored value, after omission and redaction.
 
 ## Storage
 

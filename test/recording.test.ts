@@ -14,6 +14,21 @@ function openTemp(): { directory: string; blackbox: Blackbox } {
   return { directory, blackbox: Blackbox.open({ directory }) };
 }
 
+test("a new recording folder ignores its own contents and leaves the project gitignore alone", () => {
+  const project = tempDirectory();
+  const projectGitignore = path.join(project, ".gitignore");
+  fs.writeFileSync(projectGitignore, "keep\n");
+  const recordings = path.join(project, ".blackbox");
+
+  Blackbox.open({ directory: recordings });
+  assert.equal(fs.readFileSync(path.join(recordings, ".gitignore"), "utf8"), "*\n");
+  assert.equal(fs.readFileSync(projectGitignore, "utf8"), "keep\n");
+
+  fs.writeFileSync(path.join(recordings, ".gitignore"), "keep-recordings\n");
+  Blackbox.open({ directory: recordings });
+  assert.equal(fs.readFileSync(path.join(recordings, ".gitignore"), "utf8"), "keep-recordings\n");
+});
+
 test("assigns a monotonic sequence and reloads it from disk", () => {
   const { directory, blackbox } = openTemp();
   const session = blackbox.startSession({ agent: TEST_AGENT });

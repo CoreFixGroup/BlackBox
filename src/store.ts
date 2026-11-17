@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 
 import { appendLine, fsyncFile, writeJsonAtomic } from "./atomic.js";
 import { normalizeAgent } from "./agent.js";
@@ -39,6 +40,7 @@ export class SessionStore {
     this.directory = options.directory;
     this.redactSecrets = options.redactSecrets;
     this.captureContent = options.captureContent;
+    ensureRecordingsGitignore(this.directory);
   }
 
   startSession(input: SessionStartInput): SessionHeader {
@@ -252,6 +254,17 @@ export class SessionStore {
       return { header: null, error: `invalid session.json for ${sessionId}`, missing: false };
     }
     return { header: parsed, error: "", missing: false };
+  }
+}
+
+function ensureRecordingsGitignore(directory: string): void {
+  fs.mkdirSync(directory, { recursive: true });
+  const filePath = path.join(directory, ".gitignore");
+  try {
+    fs.writeFileSync(filePath, "*\n", { encoding: "utf8", flag: "wx" });
+  } catch (error) {
+    const code = typeof error === "object" && error !== null && "code" in error ? String(error.code) : "";
+    if (code !== "EEXIST") throw error;
   }
 }
 
