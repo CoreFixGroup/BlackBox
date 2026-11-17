@@ -69,6 +69,40 @@ Delete the old `blackbox-on` command left by the previous build before you run `
 
 On Windows the old file blocks `npm link`, and on macOS and Linux it can still run old code if `~/.local/bin` comes first in `PATH`.
 
+## Install as a Cursor plugin
+
+From the Marketplace, once Blackbox is approved: open Customize, search for Blackbox, and choose Install.
+
+To test it locally before that, link this repository into Cursor's local plugins folder, then restart Cursor.
+
+Run these from the cloned Blackbox folder.
+
+macOS and Linux:
+
+```bash
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)" ~/.cursor/plugins/local/blackbox
+```
+
+Windows, from PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\plugins\local"
+New-Item -ItemType Junction -Path "$env:USERPROFILE\.cursor\plugins\local\blackbox" -Target (Get-Location)
+```
+
+Node.js 20 or newer must be installed and on `PATH`. The hook runs `node`. Without Node, nothing is recorded.
+
+Everything is stored in `<project>/.blackbox`. Nothing is uploaded. Secrets are redacted. Chain-of-thought is never stored. Blackbox keeps only its length and duration.
+
+See a recording with `/blackbox-report`, or open `report.html` in the session folder. Run `/blackbox-report` from the project. It opens the newest dashboard and replies with the session id and path. It does not read or summarize the recording.
+
+Turn Blackbox off by uninstalling the plugin.
+
+Cursor's CLI does not run plugin hooks yet. CLI users should use `blackbox-on`.
+
+If you used `blackbox-on` before, the plugin stays quiet in those projects, so nothing is recorded twice.
+
 ## Read the dashboard
 
 The counts are filters. **Reads** are files the agent opened. **Edits** are files it changed. They are separate, and each has its own color. Chat, tools, commands, and problems work the same way.

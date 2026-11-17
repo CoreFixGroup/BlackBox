@@ -1,0 +1,14 @@
+{
+  "name": "blackbox",
+  "description": "Records Cursor agent activity on this computer. Nothing is uploaded, and thoughts are not stored.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Ankit Kumar Jha",
+    "email": "ankitjha@corefixgroup.com"
+  },
+  "homepage": "https://github.com/ankit-jha-10/Blackbox",
+  "repository": "https://github.com/ankit-jha-10/Blackbox",
+  "keywords": ["recorder", "audit", "local", "hooks", "observability"],
+  "hooks": "hooks/cursor.json",
+  "commands": "commands/"
+}

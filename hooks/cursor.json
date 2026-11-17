@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "beforeSubmitPrompt": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "afterAgentResponse": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "afterAgentThought": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "beforeReadFile": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "preToolUse": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "postToolUse": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "postToolUseFailure": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "afterFileEdit": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "afterShellExecution": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "afterMCPExecution": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "subagentStart": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "subagentStop": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "preCompact": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "stop": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }],
+    "sessionEnd": [{ "command": "node ./dist/cursor-hook.js --plugin", "timeout": 15 }]
+  }
+}

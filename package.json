@@ -28,7 +28,7 @@
     "blackbox": "tsx src/cli.ts",
     "setup:cursor": "tsx src/install-cursor-hooks.ts",
     "pretest": "tsc --noEmit -p tsconfig.check.json",
-    "test": "tsx --test test/recording.test.ts test/export-report.test.ts test/demo.test.ts test/instrument.test.ts test/cli.test.ts test/protocol.test.ts test/proxy.test.ts test/environment.test.ts test/replay.test.ts test/compare.test.ts test/verify.test.ts test/crud.test.ts test/cursor-adapter.test.ts test/install-cursor-hooks.test.ts"
+    "test": "tsx --test test/recording.test.ts test/export-report.test.ts test/demo.test.ts test/instrument.test.ts test/cli.test.ts test/protocol.test.ts test/proxy.test.ts test/environment.test.ts test/replay.test.ts test/compare.test.ts test/verify.test.ts test/crud.test.ts test/cursor-adapter.test.ts test/cursor-plugin.test.ts test/install-cursor-hooks.test.ts"
   },
   "devDependencies": {
     "@types/node": "^22.19.0",

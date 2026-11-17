@@ -9,7 +9,10 @@ export async function main(stdin = process.stdin) {
         if (raw.trim() !== "") {
             const parsed = JSON.parse(raw);
             response = cursorHookResponse(eventName(parsed));
-            const directory = recordingDirectory(parsed, { envDir: process.env.BLACKBOX_DIR });
+            const directory = recordingDirectory(parsed, {
+                envDir: process.env.BLACKBOX_DIR,
+                plugin: process.argv.includes("--plugin"),
+            });
             if (directory !== undefined)
                 response = handleCursorHook(parsed, directory);
         }
@@ -25,7 +28,9 @@ export function recordingDirectory(input, options = {}) {
         return options.envDir;
     const workspace = workspaceRoot(input);
     if (workspace === undefined)
-        return ".blackbox";
+        return options.plugin ? undefined : ".blackbox";
+    if (options.plugin && projectHookInstalled(workspace))
+        return undefined;
     const cwd = options.cwd ?? process.cwd();
     if (projectHookInstalled(workspace) && !sameDirectory(cwd, workspace))
         return undefined;

@@ -11,7 +11,10 @@ export async function main(stdin: AsyncIterable<Uint8Array> = process.stdin): Pr
     if (raw.trim() !== "") {
       const parsed: unknown = JSON.parse(raw);
       response = cursorHookResponse(eventName(parsed));
-      const directory = recordingDirectory(parsed, { envDir: process.env.BLACKBOX_DIR });
+      const directory = recordingDirectory(parsed, {
+        envDir: process.env.BLACKBOX_DIR,
+        plugin: process.argv.includes("--plugin"),
+      });
       if (directory !== undefined) response = handleCursorHook(parsed, directory);
     }
   } catch (error) {
@@ -23,11 +26,12 @@ export async function main(stdin: AsyncIterable<Uint8Array> = process.stdin): Pr
 
 export function recordingDirectory(
   input: unknown,
-  options: { envDir?: string; cwd?: string } = {},
+  options: { envDir?: string; cwd?: string; plugin?: boolean } = {},
 ): string | undefined {
   if (options.envDir !== undefined && options.envDir.length > 0) return options.envDir;
   const workspace = workspaceRoot(input);
-  if (workspace === undefined) return ".blackbox";
+  if (workspace === undefined) return options.plugin ? undefined : ".blackbox";
+  if (options.plugin && projectHookInstalled(workspace)) return undefined;
   const cwd = options.cwd ?? process.cwd();
   if (projectHookInstalled(workspace) && !sameDirectory(cwd, workspace)) return undefined;
   return path.join(workspace, ".blackbox");
