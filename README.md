@@ -8,19 +8,47 @@ Nothing leaves the machine. Blackbox does not call a model, send telemetry, or a
 
 ## Record a Cursor project
 
-Node.js 20 or newer is required. npm link provides the `blackbox` and `blackbox-on` commands.
+Node.js 20 or newer is required. Check with:
+
+```bash
+node --version
+```
+
+It must show v20 or newer. npm link provides the `blackbox` and `blackbox-on` commands. If you installed Blackbox before, first follow "Upgrading from an older version" below. Do not use `npm link --force`.
 
 ```bash
 git clone https://github.com/ankit-jha-10/Blackbox.git
-cd Blackbox
+```
+
+cd into the cloned folder (named Blackbox by default).
+
+```bash
 npm link
 ```
+
+Confirm the link worked. `blackbox --help` prints the usage text, and the shell can find `blackbox-on`.
 
 Then, in each project:
 
 ```bash
 blackbox-on
 ```
+
+The expected output is:
+
+```text
+Cursor will record only <project path>
+```
+
+Restart Cursor, or reload the window, if the project was already open.
+
+From that project folder, run:
+
+```bash
+blackbox list
+```
+
+It prints `No recordings found.` until an Agent chat has run in that project.
 
 If you move the cloned folder, run `blackbox-on` again in your projects.
 
@@ -188,7 +216,15 @@ blackbox verify <sessionId> [--dir <path>] [--exists <path>] [--sha256 <path>=<h
 
 The default directory is `.blackbox`. `show` prints the session, the integrity result, and the events in order.
 
-From this folder, before the package is built, the same commands run through npm:
+People who install with `npm link` never need to build. Building is only for people changing the source code:
+
+```bash
+npm install
+npm run build
+npm run check:dist
+```
+
+During that work, the same commands also run from the source:
 
 ```bash
 npm run blackbox -- list
