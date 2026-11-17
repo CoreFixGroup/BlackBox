@@ -26,7 +26,7 @@ cd into the cloned folder (named Blackbox by default).
 npm link
 ```
 
-Confirm the link worked. `blackbox --help` prints the usage text, and the shell can find `blackbox-on`.
+Confirm the link worked. `blackbox --help` prints the usage text. On macOS or Linux, `which blackbox-on` should print a path. On Windows, `where blackbox-on` should print a path.
 
 Then, in each project:
 
@@ -40,7 +40,7 @@ The expected output is:
 Cursor will record only <project path>
 ```
 
-Restart Cursor, or reload the window, if the project was already open.
+That writes `.cursor/hooks.json` for that folder only. Other projects stay off. Restart Cursor, or reload the window, if the project was already open.
 
 From that project folder, run:
 
@@ -52,13 +52,13 @@ It prints `No recordings found.` until an Agent chat has run in that project.
 
 If you move the cloned folder, run `blackbox-on` again in your projects.
 
-That writes `.cursor/hooks.json` for that folder only. Other projects stay off. Start an Agent chat. The diary is:
+Start an Agent chat. The recording dashboard is:
 
 ```text
 <project>/.blackbox/sessions/cursor-YYYY-MM-DD-HHMMSS/report.html
 ```
 
-Open `report.html` in a browser. The page is one file. A new chat writes its own page from the same generator, so you do not edit each report by hand.
+Open `report.html` in a browser. The page is one file.
 
 ## Upgrading from an older version
 
