@@ -8,20 +8,21 @@ Nothing leaves the machine. Blackbox does not call a model, send telemetry, or a
 
 ## Record a Cursor project
 
-Build Blackbox once, from this folder:
+Node.js 20 or newer is required. npm link provides the `blackbox` and `blackbox-on` commands.
 
 ```bash
-npm install
-npm run build
+git clone https://github.com/ankit-jha-10/Blackbox.git
+cd Blackbox
+npm link
 ```
 
-Node.js 20 or newer is required. The build also installs the `blackbox-on` command. Open a new terminal if that command is not found yet.
-
-Then open the project you want to record, and in that project's terminal run:
+Then, in each project:
 
 ```bash
 blackbox-on
 ```
+
+If you move the cloned folder, run `blackbox-on` again in your projects.
 
 That writes `.cursor/hooks.json` for that folder only. Other projects stay off. Start an Agent chat. The diary is:
 
@@ -47,7 +48,7 @@ A folder named `cursor-YYYY-MM-DD-HHMMSS` is the local time the recording starte
 
 ## Give this folder to someone else
 
-Send the source. Do not send `node_modules`, `dist`, or `.blackbox`. They need Node.js 20. In the Blackbox folder they run `npm install` and `npm run build` once. In each project they want recorded, they run `blackbox-on`. If Blackbox itself moves to a new path, they run the build again so the command points at the new place.
+Send the repository. Do not send `node_modules` or `.blackbox`. They need Node.js 20. They clone it and run `npm link`. In each project they want recorded, they run `blackbox-on`. If the cloned folder moves, they run `blackbox-on` again in those projects.
 
 ## Use it from your own agent
 

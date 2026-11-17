@@ -18,7 +18,8 @@
     }
   },
   "scripts": {
-    "build": "tsc && node dist/install-cursor-hooks.js --install-command",
+    "build": "tsc",
+    "check:dist": "tsc && node scripts/check-dist.mjs",
     "demo": "tsx examples/demo-agent.ts",
     "demo:instrumented": "tsx examples/instrumented-agent.ts",
     "demo:proxy": "tsx examples/proxy-demo.ts",

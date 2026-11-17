@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -112,27 +113,6 @@ function quoteCommand(filePath: string): string {
   return `"${filePath.replaceAll('"', '\\"')}"`;
 }
 
-export function installBlackboxOnCommand(installScript: string, binDir: string): string {
-  if (!fs.existsSync(installScript)) {
-    throw new Error(`Build Blackbox first. Missing ${installScript}`);
-  }
-  fs.mkdirSync(binDir, { recursive: true });
-  const script = path.resolve(installScript);
-  const windows = process.platform === "win32";
-  const target = path.join(binDir, windows ? "blackbox-on.cmd" : "blackbox-on");
-  const body = windows
-    ? `@echo off\r\nnode ${quoteCommand(script)} %*\r\n`
-    : `#!/bin/sh\nexec node ${quoteCommand(script)} "$@"\n`;
-  fs.writeFileSync(target, body);
-  if (!windows) fs.chmodSync(target, 0o755);
-  return target;
-}
-
-function npmBinDir(): string {
-  if (process.platform === "win32" && process.env.APPDATA) return path.join(process.env.APPDATA, "npm");
-  return path.join(os.homedir(), ".local", "bin");
-}
-
 function projectRoot(): string {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 }
@@ -140,19 +120,11 @@ function projectRoot(): string {
 if (isDirectRun(import.meta.url)) {
   try {
     const root = projectRoot();
-    const installScript = path.join(root, "dist", "install-cursor-hooks.js");
-    if (process.argv[2] === "--install-command") {
-      const command = installBlackboxOnCommand(installScript, npmBinDir());
-      process.stdout.write(`Installed ${command}\nIn a project folder, run: blackbox-on\n`);
-    } else {
-      const hookScript = path.join(root, "dist", "cursor-hook.js");
-      const project = path.resolve(process.argv[2] ?? process.cwd());
-      const written = installCursorProjectHooks(hookScript, project);
-      removeCursorUserHooks(path.join(os.homedir(), ".cursor", "hooks.json"));
-      const command = installBlackboxOnCommand(installScript, npmBinDir());
-      process.stdout.write(`Cursor will record only ${project}\n${written}\n`);
-      process.stdout.write(`In any project folder, run: blackbox-on\n${command}\n`);
-    }
+    const hookScript = path.join(root, "dist", "cursor-hook.js");
+    const project = path.resolve(process.argv[2] ?? process.cwd());
+    const written = installCursorProjectHooks(hookScript, project);
+    removeCursorUserHooks(path.join(os.homedir(), ".cursor", "hooks.json"));
+    process.stdout.write(`Cursor will record only ${project}\n${written}\n`);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     process.stderr.write(`${message}\n`);

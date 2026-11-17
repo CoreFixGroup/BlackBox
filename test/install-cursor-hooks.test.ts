@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 
-import { installBlackboxOnCommand, installCursorProjectHooks, removeCursorUserHooks } from "../src/install-cursor-hooks.js";
+import { installCursorProjectHooks, removeCursorUserHooks } from "../src/install-cursor-hooks.js";
 import { tempDirectory } from "./helpers.js";
 
 test("setup writes hooks into one project and keeps other hooks", () => {
@@ -61,18 +61,6 @@ test("setup removes the all-projects hook file when it only contains Blackbox", 
 
   assert.equal(removeCursorUserHooks(hooksFile), true);
   assert.equal(fs.existsSync(hooksFile), false);
-});
-
-test("blackbox-on is a one-word command for the current folder", () => {
-  const directory = tempDirectory();
-  const script = path.join(directory, "install-cursor-hooks.js");
-  const binDir = path.join(directory, "bin");
-  fs.writeFileSync(script, "");
-
-  const command = installBlackboxOnCommand(script, binDir);
-  const body = fs.readFileSync(command, "utf8");
-  assert.equal(body.includes(script), true);
-  assert.equal(path.basename(command).startsWith("blackbox-on"), true);
 });
 
 test("setup refuses to replace a broken hooks file", () => {
