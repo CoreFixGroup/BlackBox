@@ -17,7 +17,7 @@ node --version
 It must show v20 or newer. npm link provides the `blackbox` and `blackbox-on` commands. If you installed Blackbox before, first follow "Upgrading from an older version" below. Do not use `npm link --force`.
 
 ```bash
-git clone https://github.com/ankit-jha-10/Blackbox.git
+git clone https://github.com/CoreFixGroup/BlackBox.git
 ```
 
 cd into the cloned folder (named Blackbox by default).
