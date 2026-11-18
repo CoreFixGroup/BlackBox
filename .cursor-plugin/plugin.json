@@ -6,8 +6,9 @@
     "name": "Ankit Kumar Jha",
     "email": "ankitjha@corefixgroup.com"
   },
-  "homepage": "https://github.com/ankit-jha-10/Blackbox",
-  "repository": "https://github.com/ankit-jha-10/Blackbox",
+  "license": "MIT",
+  "homepage": "https://github.com/CoreFixGroup/BlackBox",
+  "repository": "https://github.com/CoreFixGroup/BlackBox",
   "keywords": ["recorder", "audit", "local", "hooks", "observability"],
   "hooks": "hooks/cursor.json",
   "commands": "commands/"
