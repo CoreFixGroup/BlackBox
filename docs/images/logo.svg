@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Blackbox">
+  <!--
+    Cursor plugin logo
+    - Docs: relative path like assets/logo.svg (or absolute HTTPS URL)
+    - Official marketplace plugins use 512x512 square SVG/PNG
+    - No hard pixel rule in docs; 512x512 matches Cursor's published plugins
+  -->
+  <rect width="512" height="512" rx="96" fill="#1c2128"/>
+
+  <!-- Soft recording wash -->
+  <circle cx="386" cy="126" r="150" fill="#b5524a" opacity="0.18"/>
+
+  <!-- Flight-recorder body -->
+  <rect x="118" y="148" width="276" height="216" rx="36" fill="#2a313a"/>
+  <rect x="118" y="148" width="276" height="216" rx="36" fill="none" stroke="#8f9bab" stroke-width="10"/>
+
+  <!-- Screen / tape window -->
+  <rect x="156" y="188" width="200" height="96" rx="18" fill="#12161c"/>
+
+  <!-- Wave / event trace -->
+  <path
+    d="M176 248 C196 220, 212 276, 232 248 S268 220, 288 248 S324 276, 340 248"
+    fill="none"
+    stroke="#f7f5f2"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Record LED (matches dashboard red accent) -->
+  <circle cx="196" cy="322" r="16" fill="#b5524a"/>
+  <circle cx="196" cy="322" r="28" fill="#b5524a" opacity="0.28"/>
+
+  <!-- Status ticks -->
+  <rect x="244" y="314" width="52" height="14" rx="7" fill="#4e5964"/>
+  <rect x="312" y="314" width="52" height="14" rx="7" fill="#4e5964"/>
+</svg>
